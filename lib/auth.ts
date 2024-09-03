@@ -31,9 +31,12 @@ export const authOptions: NextAuthOptions = {
           return user;
         } else {
           // If the user doesn't exist, you might want to create a new user
+
           const newUser = await db
             .insert(users)
+
             .values({
+              // @ts-ignore
               address: credentials.address,
               name: `User ${credentials.address.slice(0, 6)}`,
             })
@@ -50,9 +53,13 @@ export const authOptions: NextAuthOptions = {
     error: "/login", // Error code passed in query string as ?error=
   },
   adapter: DrizzleAdapter(db, {
+    // @ts-ignore
     usersTable: users,
+    // @ts-ignore
     accountsTable: accounts,
+    // @ts-ignore
     sessionsTable: sessions,
+    // @ts-ignore
     verificationTokensTable: verificationTokens,
   }) as Adapter,
   session: { strategy: "jwt" },
